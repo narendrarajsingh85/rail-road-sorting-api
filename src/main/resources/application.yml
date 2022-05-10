@@ -1,0 +1,20 @@
+micronaut:
+  application:
+    name: bootcamp
+  server:
+    port: 8081
+    cors:
+      enabled: true
+  processing:
+    incremental: false
+
+dynamodb:
+  endpoint: http://localhost:7000
+  destination-table-name: destination
+  receiver-table-name: receiver
+  car-table-name: car
+
+netty:
+  default:
+    allocator:
+      max-order: 3
