@@ -9,7 +9,7 @@ micronaut:
     incremental: false
 
 dynamodb:
-  endpoint: http://localhost:7000
+  endpoint: http://localhost:8000
   destination-table-name: destination
   receiver-table-name: receiver
   car-table-name: car
