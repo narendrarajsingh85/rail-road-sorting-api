@@ -32,4 +32,13 @@ class DestinationRepository(
     fun getAll(): Mono<Page<Destination>> {
         return table.scan().toMono()
     }
+
+    fun deleteDestination(name: String):Mono<Destination>{
+        val key:Key = Key.builder().partitionValue(name).build()
+        return table.deleteItem(key).toMono()
+    }
+
+    fun update(destination: Destination):Mono<Destination>{
+        return table.updateItem(destination).thenApply { destination }.toMono()
+    }
 }

@@ -27,4 +27,20 @@ class DestinationService(private val destinationRepository: DestinationRepositor
     fun getAllItems(): Mono<List<Destination>> {
         return destinationRepository.getAll().map { it.items() }
     }
+
+    fun delete(name: String):Mono<Destination>{
+        return destinationRepository.findByName(name)
+                .flatMap {
+                    destinationRepository.deleteDestination(name)
+                }.switchIfEmpty(IllegalArgumentException("city $name not found").toMono())
+    }
+
+    fun update(destination: Destination):Mono<Destination>{
+        return destinationRepository.findByName(destination.name!!)
+                .flatMap {
+                    destinationRepository.update(destination)}
+                .switchIfEmpty(
+                        IllegalArgumentException("city not found").toMono()
+                )
+    }
 }

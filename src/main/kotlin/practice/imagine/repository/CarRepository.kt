@@ -24,6 +24,10 @@ class CarRepository(
         return table.getItem(key).toMono()
     }
 
+    fun getAllCars(): Mono<Page<Car>> {
+        return table.scan().toMono()
+    }
+
     fun findById(id: Int): Mono<Car> {
         val key: Key = Key.builder().partitionValue(id).build()
         return table.getItem(key).toMono()
@@ -39,9 +43,13 @@ class CarRepository(
                 .toMono()
     }
 
-    fun getAllCars(): Mono<Page<Car>> {
-        return table.scan().toMono()
+    fun delete(name:String):Mono<Car>{
+        val key:Key= Key.builder().partitionValue(name).build()
+        return table.deleteItem(key).toMono()
     }
 
+    fun update(car: Car): Mono<Car> {
+        return table.updateItem(car).thenApply { car }.toMono()
 
+    }
 }

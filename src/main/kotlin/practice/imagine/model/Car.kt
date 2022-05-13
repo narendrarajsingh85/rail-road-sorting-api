@@ -11,14 +11,20 @@ import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbParti
 data class Car(
         @get:DynamoDbPartitionKey
 
-        @get:DynamoDbAttribute(value = "car_id")
-        var carId:Int ?= 0,
+        /* @get:DynamoDbAttribute(value = "car_id")
+         var carId: Int? = 0,*/
 
         @get:DynamoDbAttribute(value = "name")
-         var name:String? = null,
+        var name: String? = null,
 
-  /*     @get:DynamoDbAttribute(value = "model")
-         var model:List<CarModels>?= null*/
+        @get:DynamoDbAttribute(value = "destination")
+        var destination: Destination? = null,
+
+        @get:DynamoDbAttribute(value = "receiver")
+        var receiver: Receiver? = null
+
+/*     @get:DynamoDbAttribute(value = "model")
+       var model:List<CarModels>?= null*/
 
 
 )

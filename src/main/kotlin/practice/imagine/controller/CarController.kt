@@ -1,5 +1,6 @@
 package practice.imagine.controller
 
+import com.example.model.CarObj
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.*
 import io.micronaut.validation.Validated
@@ -26,19 +27,36 @@ class CarController(private val carService: CarService) {
       }
 
 
-     /*  @Get("/{id}")
-        fun getCarByTrainID(@PathVariable id:Int):Mono<HttpResponse<Car>>{
-            return carService.getCarsByTrainId(id).map { HttpResponse.ok(it) }
-        }*/
+    @Get("/{name}")
+    fun getCarByName(@PathVariable name: String): Mono<HttpResponse<Car>> {
+        return carService.getCarByName(name).map { HttpResponse.ok(it) }
+    }
 
 
     @Post
     fun create(
-            @Body @Valid car: Car
+            @Body @Valid car: CarObj
     ): Mono<HttpResponse<Car>> {
         return carService
-                .saveCar(car, true)
+                .create(car, true)
                 .map { HttpResponse.created(it) }
+    }
+
+    @Delete("/{name}")
+    fun deleteByName(@PathVariable name: String): Mono<HttpResponse<Car>> {
+        return carService.delete(name)
+                .map { HttpResponse.ok(it) }
+    }
+
+    @Put
+    fun update(@Body @Valid car: Car): Mono<HttpResponse<Car>> {
+        return carService.update(car)
+                .map { HttpResponse.ok(it) }
+    }
+
+    @Get("/sort")
+    fun sortCars(): Mono<HttpResponse<List<Car>>> {
+        return carService.sortCars().map { HttpResponse.ok(it) }
     }
 
 
